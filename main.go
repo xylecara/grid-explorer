@@ -5,8 +5,16 @@ import "fmt"
 func main() {
 	grid := setGrid()
 	gridString := formatGrid(grid)
-	randomCoord := randomizeTreasure(grid)
+	treasureCoord := randomizePosition(grid)
+
+	player := newPlayer(grid)
+
 
 	fmt.Println(gridString)
-	fmt.Println(randomCoord)
+	fmt.Printf(
+		"Player is at (%v, %v) while treasure is at (%v, %v)\n", 
+		player.coordinates.X, player.coordinates.Y, treasureCoord.X, treasureCoord.Y,
+	)
+
+	player.movementControls(grid)
 }
