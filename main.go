@@ -10,11 +10,11 @@ type coords struct {
 }
 
 func main() {
-	rows, columns := 5, 3
+	rows, columns := 10, 10 
 
-	grid := make([][]coords, columns)
+	grid := make([][]coords, rows)
 	for i := range grid {
-		grid[i] = make([]coords, rows)
+		grid[i] = make([]coords, columns)
 	}
 
 	for x := range grid {
