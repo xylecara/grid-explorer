@@ -31,14 +31,12 @@ func setGrid() [][]coords {
 	return grid
 }
 
-func formatGrid() string {
+func formatGrid(grid [][]coords) string {
 	var gridFormat strings.Builder
 
-	grid := setGrid()
-
-	for i := range grid {
-		for j := range grid[i] {
-			fmt.Fprintf(&gridFormat, "(%v, %v)", grid[i][j].X, grid[i][j].Y)
+	for x := range grid {
+		for y := range grid[x] {
+			fmt.Fprintf(&gridFormat, "(%v, %v)", grid[x][y].X, grid[x][y].Y)
 		}
 		gridFormat.WriteString("\n")
 	}
@@ -65,6 +63,11 @@ func getRows() int {
 			continue
 		}
 
+		if rows <= 0 {
+			fmt.Println("Invalid input! You cant use 0 or less as \nan input, try agian.")
+			continue
+		}
+
 		break
 	}
 
@@ -87,6 +90,11 @@ func getColumns() int {
 		columns, err = strconv.Atoi(columnsString)
 		if err != nil {
 			fmt.Println("Invalid input! Only integers are allowed, try again.")
+			continue
+		}
+
+		if columns <= 0 {
+			fmt.Println("Invalid input! You cant use 0 or less as \nan input, try agian.")
 			continue
 		}
 

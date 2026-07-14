@@ -3,7 +3,10 @@ package main
 import "fmt"
 
 func main() {
-	grid := formatGrid()
+	grid := setGrid()
+	gridString := formatGrid(grid)
+	randomCoord := randomizeTreasure(grid)
 
-	fmt.Println(grid)
+	fmt.Println(gridString)
+	fmt.Println(randomCoord)
 }
