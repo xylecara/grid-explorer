@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func main() {
-	grid := setGrid()
+	grid := formatGrid()
 
 	fmt.Println(grid)
 }

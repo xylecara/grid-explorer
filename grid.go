@@ -13,9 +13,7 @@ type coords struct {
 	Y int
 }
 
-func setGrid() string {
-	var gridFormat strings.Builder
-
+func setGrid() [][]coords {
 	rows := getRows()
 	columns := getColumns()
 
@@ -29,6 +27,14 @@ func setGrid() string {
 			grid[x][y] = coords{X: x, Y: y}
 		}
 	}
+
+	return grid
+}
+
+func formatGrid() string {
+	var gridFormat strings.Builder
+
+	grid := setGrid()
 
 	for i := range grid {
 		for j := range grid[i] {
