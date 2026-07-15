@@ -9,12 +9,11 @@ func main() {
 
 	player := newPlayer(grid)
 
-
 	fmt.Println(gridString)
 	fmt.Printf(
-		"Player is at (%v, %v) while treasure is at (%v, %v)\n", 
+		"Player is at (%v, %v) while treasure is at (%v, %v)\n",
 		player.coordinates.X, player.coordinates.Y, treasureCoord.X, treasureCoord.Y,
 	)
 
-	player.movementControls(grid)
+	player.playerControls(grid, treasureCoord)
 }

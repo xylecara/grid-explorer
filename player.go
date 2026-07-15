@@ -21,7 +21,7 @@ func newPlayer(grid [][]coords) player {
 	}
 }
 
-func (p *player) movementControls(grid [][]coords) {
+func (p *player) playerControls(grid [][]coords, treasure coords) {
 	reader := bufio.NewReader(os.Stdin)
 	var gridLimit coords
 
@@ -31,18 +31,18 @@ func (p *player) movementControls(grid [][]coords) {
 		}
 	}
 
-	for {
-		input, err := getInputs(reader, "Move around(Up, Down, Left, Right, Exit)")
+	for p.health > 0 {
+		input, err := getInputs(reader, "Do something(Up, Down, Left, Right, Dig, Exit)")
 		if err != nil {
 			fmt.Println("Invalid input! Try again.")
 		}
 
 		inputLowercased := strings.ToLower(input)
-		switch inputLowercased{
+		switch inputLowercased {
 		case "up":
 			if p.coordinates.Y < gridLimit.Y {
 				p.coordinates.Y++
-			    fmt.Printf("Player is at (%v, %v)\n", p.coordinates.X, p.coordinates.Y)
+				fmt.Printf("Player is at (%v, %v)\n", p.coordinates.X, p.coordinates.Y)
 			} else {
 				fmt.Println("You hit a wall")
 			}
@@ -51,16 +51,16 @@ func (p *player) movementControls(grid [][]coords) {
 		case "down":
 			if p.coordinates.Y > 0 {
 				p.coordinates.Y--
-			    fmt.Printf("Player is at (%v, %v)\n", p.coordinates.X, p.coordinates.Y)
+				fmt.Printf("Player is at (%v, %v)\n", p.coordinates.X, p.coordinates.Y)
 			} else {
 				fmt.Println("You hit a wall")
 			}
 			continue
-		
+
 		case "right":
 			if p.coordinates.X < gridLimit.X {
 				p.coordinates.X++
-			    fmt.Printf("Player is at (%v, %v)\n", p.coordinates.X, p.coordinates.Y)
+				fmt.Printf("Player is at (%v, %v)\n", p.coordinates.X, p.coordinates.Y)
 			} else {
 				fmt.Println("You hit a wall")
 			}
@@ -68,20 +68,34 @@ func (p *player) movementControls(grid [][]coords) {
 		case "left":
 			if p.coordinates.X > 0 {
 				p.coordinates.X--
-			    fmt.Printf("Player is at (%v, %v)\n", p.coordinates.X, p.coordinates.Y)
+				fmt.Printf("Player is at (%v, %v)\n", p.coordinates.X, p.coordinates.Y)
 			} else {
 				fmt.Println("You hit a wall")
 			}
 			continue
-		
+		case "dig":
+			fmt.Println("Digging...")
+			if p.isTreasureUnder(treasure) {
+				fmt.Println("You Win!")
+			} else {
+				fmt.Println("KABOOM! That was a landmine!")
+				p.health--
+				if p.health <= 0 {
+					fmt.Println("You died...")
+				}
+				continue
+			}
 		case "exit":
 			fmt.Println("Exiting...")
 		default:
 			fmt.Println("Invalid input! Try again.\n(Up, Down, Left, Right, Exit)")
 			continue
 		}
-		
+
 		break
 	}
 }
 
+func (p *player) isTreasureUnder(treasure coords) bool {
+	return p.coordinates == treasure
+}
