@@ -11,8 +11,8 @@ func menu() (play bool) {
 	reader := bufio.NewReader(os.Stdin)
 	
 
-	fmt.Println("Welcome to Grid Explorer!\nby xyleware2026")
-	fmt.Println("In this game, (0, 0) is at the top left corner of the map!\n keep that in mind if you want to get the treasre!")
+	fmt.Println("Welcome to Grid Explorer! by xyleware2026")
+	fmt.Println("In this game you have to find a treasure! Check the wind for warmth or the ground for rumbles!")
 
 	for {
 		input, err := getInputs(reader, "What will you do?\n(Play, Exit)")

@@ -41,7 +41,7 @@ func (p *player) playerControls(grid [][]coords, treasure coords) {
 		switch inputLowercased {
 		case "up":
 			if p.coordinates.Y < gridLimit.Y {
-				p.coordinates.Y--
+				p.coordinates.Y++
 			} else {
 				fmt.Println("You hit a wall")
 			}
@@ -49,7 +49,7 @@ func (p *player) playerControls(grid [][]coords, treasure coords) {
 
 		case "down":
 			if p.coordinates.Y > 0 {
-				p.coordinates.Y++
+				p.coordinates.Y--
 			} else {
 				fmt.Println("You hit a wall")
 			}

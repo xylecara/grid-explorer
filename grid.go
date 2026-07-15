@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"slices"
 	"strconv"
 	"strings"
 )
@@ -22,9 +23,9 @@ func setGrid() [][]coords {
 		grid[i] = make([]coords, columns)
 	}
 
-	for x := range grid {
-		for y := range grid[x] {
-			grid[x][y] = coords{X: x, Y: y}
+	for rowsFormat := range grid {
+		for columnsFormat := range grid[rowsFormat] {
+			grid[rowsFormat][columnsFormat] = coords{X: columnsFormat, Y: rowsFormat}
 		}
 	}
 
@@ -34,7 +35,7 @@ func setGrid() [][]coords {
 func formatGrid(grid [][]coords) string {
 	var gridFormat strings.Builder
 
-	for x := range grid {
+	for x := range slices.Backward(grid) {
 		for y := range grid[x] {
 			fmt.Fprintf(&gridFormat, "(%v, %v)", grid[x][y].X, grid[x][y].Y)
 		}
