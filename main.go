@@ -1,17 +1,16 @@
 package main
 
-import "fmt"
+import "os"
 
 func main() {
-	grid := setGrid()
-	treasureCoord := randomizePosition(grid)
+	play := menu()
+	if play {
+		grid := setGrid()
 
-	player := newPlayer(grid)
-
-	fmt.Printf(
-		"Treasure is at (%v, %v)\n",
-		treasureCoord.X, treasureCoord.Y,
-	)
-
-	player.playerControls(grid, treasureCoord)
+		treasureCoord := randomizePosition(grid)
+		player := newPlayer(grid)
+		player.playerControls(grid, treasureCoord)
+	} else {
+		os.Exit(0)
+	}
 }
