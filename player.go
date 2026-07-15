@@ -32,7 +32,7 @@ func (p *player) playerControls(grid [][]coords, treasure coords) {
 	}
 
 	for p.health > 0 {
-		input, err := getInputs(reader, "Do something(Up, Down, Left, Right, Dig, Exit)")
+		input, err := getInputs(reader, "Do something \n(Up, Down, Left, Right, Dig, Coords, Map, Exit)")
 		if err != nil {
 			fmt.Println("Invalid input! Try again.")
 		}
@@ -42,7 +42,6 @@ func (p *player) playerControls(grid [][]coords, treasure coords) {
 		case "up":
 			if p.coordinates.Y < gridLimit.Y {
 				p.coordinates.Y++
-				fmt.Printf("Player is at (%v, %v)\n", p.coordinates.X, p.coordinates.Y)
 			} else {
 				fmt.Println("You hit a wall")
 			}
@@ -51,7 +50,6 @@ func (p *player) playerControls(grid [][]coords, treasure coords) {
 		case "down":
 			if p.coordinates.Y > 0 {
 				p.coordinates.Y--
-				fmt.Printf("Player is at (%v, %v)\n", p.coordinates.X, p.coordinates.Y)
 			} else {
 				fmt.Println("You hit a wall")
 			}
@@ -60,19 +58,19 @@ func (p *player) playerControls(grid [][]coords, treasure coords) {
 		case "right":
 			if p.coordinates.X < gridLimit.X {
 				p.coordinates.X++
-				fmt.Printf("Player is at (%v, %v)\n", p.coordinates.X, p.coordinates.Y)
 			} else {
 				fmt.Println("You hit a wall")
 			}
 			continue
+
 		case "left":
 			if p.coordinates.X > 0 {
 				p.coordinates.X--
-				fmt.Printf("Player is at (%v, %v)\n", p.coordinates.X, p.coordinates.Y)
 			} else {
 				fmt.Println("You hit a wall")
 			}
 			continue
+
 		case "dig":
 			fmt.Println("Digging...")
 			if p.isTreasureUnder(treasure) {
@@ -85,8 +83,18 @@ func (p *player) playerControls(grid [][]coords, treasure coords) {
 				}
 				continue
 			}
+
+		case "show":
+			fmt.Printf("You are at (%v, %v)\n", p.coordinates.X, p.coordinates.Y)
+			continue
+		
+		case "map":
+			fmt.Println("Here is the map:\n" + formatGrid(grid))
+			continue
+
 		case "exit":
 			fmt.Println("Exiting...")
+
 		default:
 			fmt.Println("Invalid input! Try again.\n(Up, Down, Left, Right, Exit)")
 			continue
