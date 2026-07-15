@@ -32,7 +32,7 @@ func (p *player) playerControls(grid [][]coords, treasure coords) {
 	}
 
 	for p.health > 0 {
-		input, err := getInputs(reader, "Do something \n(Up, Down, Left, Right, Dig, Coords, Map, Exit)")
+		input, err := getInputs(reader, "Do something \n(Up, Down, Left, Right, Dig, Coords, Map, Check, Exit)")
 		if err != nil {
 			fmt.Println("Invalid input! Try again.")
 		}
@@ -87,11 +87,14 @@ func (p *player) playerControls(grid [][]coords, treasure coords) {
 		case "show":
 			fmt.Printf("You are at (%v, %v)\n", p.coordinates.X, p.coordinates.Y)
 			continue
-		
+
 		case "map":
 			fmt.Println("Here is the map:\n" + formatGrid(grid))
 			continue
 
+		case "check":
+			p.isNearTreasure(treasure)
+			continue
 		case "exit":
 			fmt.Println("Exiting...")
 
@@ -106,4 +109,16 @@ func (p *player) playerControls(grid [][]coords, treasure coords) {
 
 func (p *player) isTreasureUnder(treasure coords) bool {
 	return p.coordinates == treasure
+}
+
+func (p *player) isNearTreasure(teasure coords) {
+	if p.coordinates == teasure {
+		fmt.Println("The ground rumbles...")
+	} else if p.coordinates.X == teasure.X {
+		fmt.Println("The air in the east and west feels warm...")
+	} else if p.coordinates.Y == teasure.Y {
+		fmt.Println("The air in the north and south feels warm...")
+	} else {
+		fmt.Println("Hmmm, nothing out of the ordinary... Odd...")
+	}
 }
