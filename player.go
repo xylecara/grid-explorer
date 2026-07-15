@@ -21,7 +21,7 @@ func newPlayer(grid [][]coords) player {
 	}
 }
 
-func (p *player) playerControls(grid [][]coords, treasure coords) {
+func (p *player) playerControls(grid [][]coords, treasure coords, play bool) bool {
 	reader := bufio.NewReader(os.Stdin)
 	var gridLimit coords
 
@@ -32,7 +32,7 @@ func (p *player) playerControls(grid [][]coords, treasure coords) {
 	}
 
 	for p.health > 0 {
-		input, err := getInputs(reader, "Do something \n(Up, Down, Left, Right, Dig, Coords, Map, Check, Exit)")
+		input, err := getInput(reader, "Do something \n(Up, Down, Left, Right, Dig, Coords, Map, Check, Exit)")
 		if err != nil {
 			fmt.Println("Invalid input! Try again.")
 		}
@@ -75,11 +75,13 @@ func (p *player) playerControls(grid [][]coords, treasure coords) {
 			fmt.Println("Digging...")
 			if p.isTreasureUnder(treasure) {
 				fmt.Println("You Win!")
+				play = playAgain(play)
 			} else {
 				fmt.Println("KABOOM! That was a landmine!")
 				p.health--
 				if p.health <= 0 {
 					fmt.Println("You died...")
+					play = playAgain(play)
 				}
 				continue
 			}
@@ -97,14 +99,17 @@ func (p *player) playerControls(grid [][]coords, treasure coords) {
 			continue
 		case "exit":
 			fmt.Println("Exiting...")
+			play = playAgain(play)
 
 		default:
-			fmt.Println("Invalid input! Try again.\n(Up, Down, Left, Right, Exit)")
+			fmt.Println("Invalid input! Not an available command.")
 			continue
 		}
 
 		break
 	}
+
+	return play
 }
 
 func (p *player) isTreasureUnder(treasure coords) bool {
@@ -121,4 +126,32 @@ func (p *player) isNearTreasure(teasure coords) {
 	} else {
 		fmt.Println("Hmmm, nothing out of the ordinary... Odd...")
 	}
+}
+
+func playAgain(play bool) bool {
+	reader := bufio.NewReader(os.Stdin)
+
+	for {
+		input, err := getInput(reader, "Would you like to try again?(Yes/No)")
+		if err != nil {
+			fmt.Println("Invalid input!, try again.")
+		}
+
+		inputLowercased := strings.ToLower(input)
+		switch inputLowercased {
+		case "yes":
+			play = true
+
+		case "no":
+			play = false
+
+		default:
+			fmt.Println("Invalid input!, try again.")
+			continue
+		}
+
+		break
+	}
+
+	return play
 }

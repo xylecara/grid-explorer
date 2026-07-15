@@ -52,7 +52,7 @@ func getRows() int {
 	var err error
 
 	for {
-		rowsString, err = getInputs(reader, "How many rows?")
+		rowsString, err = getInput(reader, "How many rows?")
 		if err != nil {
 			fmt.Println("Invalid input! Try again.")
 			continue
@@ -82,7 +82,7 @@ func getColumns() int {
 	var err error
 
 	for {
-		columnsString, err = getInputs(reader, "How many columns?")
+		columnsString, err = getInput(reader, "How many columns?")
 		if err != nil {
 			fmt.Println("Invalid input! Try again.")
 			continue

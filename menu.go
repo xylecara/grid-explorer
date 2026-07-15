@@ -9,13 +9,12 @@ import (
 
 func menu() (play bool) {
 	reader := bufio.NewReader(os.Stdin)
-	
 
 	fmt.Println("Welcome to Grid Explorer! by xyleware2026")
 	fmt.Println("In this game you have to find a treasure! Check the wind for warmth or the ground for rumbles!")
 
 	for {
-		input, err := getInputs(reader, "What will you do?\n(Play, Exit)")
+		input, err := getInput(reader, "What will you do?\n(Play, Exit)")
 		if err != nil {
 			fmt.Println("Invalid input! Try again.")
 		}
@@ -26,7 +25,6 @@ func menu() (play bool) {
 			fmt.Println("Loading...")
 			play = true
 		case "exit":
-			fmt.Println("Bye!\nExiting...")
 			play = false
 		default:
 			fmt.Println("Invalid input, Try again!(Play, Exit)")
